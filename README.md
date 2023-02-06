@@ -41,12 +41,6 @@ sudo modprobe 8852au
 
 ### 3. Switch USB mode to USB 3.0
 
-Set the velue in `/sys/module/8852au/parameters/rtw_switch_usb_mode` is `1`
-
-```
-sudo sh -c "echo '1' > /sys/module/8852au/parameters/rtw_switch_usb_mode"
-```
-
 Add this line below into `/etc/modprobe.d/8852au.conf`
 
 ```
@@ -60,8 +54,6 @@ Add this line below into `/lib/udev/rules.d/40-usb_modeswitch.rules`
 ```
 ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="/usr/sbin/usb_modeswitch -K -v 0bda -p 1a2b"
 ```
-
-
 
 ### If you still meet 0bda problem on D-link DWA-X1850
 go to Files > right click to the usb device > choose eject

@@ -58,7 +58,8 @@ ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="/usr/sbin/usb_modeswitch 
 ### If you still meet 0bda problem on D-link DWA-X1850
 go to Files > right click to the usb device > choose eject
 ```
-lsusb #you can see the usb device status
+lsusb -t 
+#you can see the usb device status
 
 ```
 

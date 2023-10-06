@@ -3,10 +3,22 @@
 ### This repo is a fork from [lwfinger/rtl8852au](https://github.com/lwfinger/rtl8852au)
 
 RTL8852AU driver is tested on Ubuntu 20.04 and Using DWA-X1850.
+The driver supports rtl8832au/rtl8852au chipsets.
 
 Here is the tutorial for install driver.
 
 #### 0. Install dependencies
+* BUFFALO WI-U3-1200AX2(/N) with USB ID 0411:0312
+* ASUS USB-AX56 with USB ID 0b05:1997
+* ASUS USB-AX56 with USB ID 0b05:1a62
+* EDUP EP-AX1696GS with USB ID 0bda:8832
+* Fenvi FU-AX1800P with USB ID 0bda:885c
+* Realtek Demo Board with USB ID 0bda:8832
+* Realtek Demo Board with USB ID 0bda:885a
+* Realtek Demo Board with USB ID 0bda:885c
+* D-Link DWA-X1850 with USB ID 2001:3321
+* TP-Link AX1800 with USB ID 2357:013f
+* ipTIME AX2000U with USB ID 0bda:8832
 
 ```
 sudo apt-get update
@@ -16,6 +28,37 @@ sudo apt-get install make gcc linux-headers-$(uname -r) build-essential git
 
 ```
 git clone git@github.com:sunfu-chou/rtl8852au.git
+For **openSUSE**: Install necessary headers with
+```bash
+sudo zypper install make gcc kernel-devel kernel-default-devel git libopenssl-devel
+```
+For **Arch**: After installing the necessary kernel headers and base-devel,
+```bash
+git clone https://aur.archlinux.org/rtw89-dkms-git.git
+cd rtw89-dkms-git
+makepkg -sri
+```
+If any of the packages above are not found check if your distro installs them like that.
+
+##### Installation
+When a USB device is plugged in, or detected at boot, this rule causes the utulity
+usb_modeswitch to unload any 0bda:1a2b devices that it finds. If you have a
+device with different ID, change the rule accordingly.
+
+The build this driver, do the following:
+
+For all distros:
+```bash
+git clone https://github.com/lwfinger/rtl8852au.git
+cd rtl8852au
+make
+sudo make install
+
+When you get a new kernel, you will need to rebuild the driver. Do the following:
+cd rtl8852au
+git pull
+make
+sudo make install
 ```
 
 #### 2. Use DKMS to build and install

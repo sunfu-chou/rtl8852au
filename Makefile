@@ -629,6 +629,9 @@ else
 
 export CONFIG_RTL8852AU = m
 
+SUBARCH := $(shell uname -m | sed -e "s/i.86/i386/; s/ppc.*/powerpc/; s/armv.l/arm/; s/aarch64/arm64/;")
+ARCH ?= $(SUBARCH)
+
 all: modules
 
 modules:
@@ -645,6 +648,7 @@ install:
 	@mkdir -p $(MODDESTDIR)realtek/rtw89/
 	install -p -m 644 $(MODULE_NAME).ko  $(MODDESTDIR)realtek/rtw89/
 	/sbin/depmod -a ${KVER}
+	@cp suspend_rtw8852au /usr/lib/systemd/system-sleep/.
 
 uninstall:
 	rm -f $(MODDESTDIR)realtek/rtw89/$(MODULE_NAME).ko
@@ -656,7 +660,7 @@ uninstall:
 sign:
 	@openssl req -new -x509 -newkey rsa:2048 -keyout MOK.priv -outform DER -out MOK.der -nodes -days 36500 -subj "/CN=Custom MOK/"
 	@mokutil --import MOK.der
-	@$(KSRC)/scripts/sign-file sha256 MOK.priv MOK.der 8812au.ko
+	@$(KSRC)/scripts/sign-file sha256 MOK.priv MOK.der 8852au.ko
 
 sign-install: all sign install
 
